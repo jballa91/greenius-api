@@ -1,2 +1,2 @@
 # Greenius
-##### It's genius, but it's green.
+It's genius, but it's green.
