@@ -7,6 +7,11 @@ const { resolvers } = require("./resolvers");
 
 require("./config");
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -25,6 +30,7 @@ const server = new ApolloServer({
 
     return isAuthenticated;
   },
+  cors: corsOptions,
 });
 const app = express();
 server.applyMiddleware({ app });
