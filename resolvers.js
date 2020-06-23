@@ -49,8 +49,8 @@ const resolvers = {
         return e.message;
       }
     },
-    addSong: async (_, args, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    addSong: async (_, args, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
@@ -60,8 +60,8 @@ const resolvers = {
         return e.message;
       }
     },
-    addSongComment: async (_, args, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    addSongComment: async (_, args, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
@@ -75,8 +75,8 @@ const resolvers = {
         return e.message;
       }
     },
-    addAnnotation: async (_, args, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    addAnnotation: async (_, args, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
@@ -90,8 +90,8 @@ const resolvers = {
         return e.message;
       }
     },
-    addAnnotationComment: async (_, args, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    addAnnotationComment: async (_, args, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
@@ -119,7 +119,7 @@ const resolvers = {
   },
   Artist: {
     songs: async (parent) => {
-      return await Song.find({ artistId: parent.id });
+      return await Song.find({ artist: parent.name });
     },
   },
 };

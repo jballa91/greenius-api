@@ -13,14 +13,15 @@ const typeDefs = gql`
     songs: [Song]
   }
   type Song {
-    id: ID!
+    id: ID
     name: String
     lyrics: [String]
     likes: Int
     dislikes: Int
     annotations: [Annotation]
     comments: [SongComment]
-    artistId: String
+    artist: String
+    genre: String
   }
   type SongComment {
     id: ID!
@@ -58,7 +59,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(userName: String!, email: String!): User
     addArtist(name: String!, genre: String!): Artist
-    addSong(name: String, lyrics: String, artistId: String): Song
+    addSong(name: String, lyrics: String, artist: String, genre: String): Song
     addSongComment(
       content: String
       likes: Int
