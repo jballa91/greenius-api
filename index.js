@@ -23,7 +23,7 @@ const server = new ApolloServer({
       if (authHeader) {
         const token = authHeader.split(" ")[1];
         const payload = await isTokenValid(token);
-        isAuthenticated = payload && payload.sub ? true : false;
+        isAuthenticated = payload && payload.decoded.sub ? true : false;
       }
     } catch (e) {
       console.error(e);

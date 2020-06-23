@@ -67,7 +67,6 @@ const resolvers = {
       try {
         let response = await SongComment.create(args);
         let response2 = await Song.findOne({ _id: args.songId }, (err, doc) => {
-          console.log(response);
           doc.comments.push(response._id);
           doc.save();
         });
