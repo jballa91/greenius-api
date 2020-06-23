@@ -7,7 +7,7 @@ const typeDefs = gql`
     email: String
   }
   type Artist {
-    id: ID!
+    id: ID
     name: String
     genre: String
     songs: [Song]

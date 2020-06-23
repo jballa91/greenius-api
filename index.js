@@ -15,8 +15,9 @@ const corsOptions = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
+  context: async ({ req, ...rest }) => {
     let isAuthenticated = false;
+    let user = null;
     try {
       const authHeader = req.headers.authorization || "";
       if (authHeader) {
@@ -28,7 +29,7 @@ const server = new ApolloServer({
       console.error(e);
     }
 
-    return isAuthenticated;
+    return { ...rest, req, auth: { user, isAuthenticated } };
   },
   cors: corsOptions,
 });

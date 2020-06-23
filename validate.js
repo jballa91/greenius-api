@@ -43,4 +43,4 @@ async function isTokenValid(token) {
   return { error: "No token provided" };
 }
 
-module.exports = isTokenValid;
+module.exports = { isTokenValid };

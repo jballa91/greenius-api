@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const { AuthenticationError } = require("apollo-server-express");
 
 const {
@@ -12,8 +11,8 @@ const {
 
 const resolvers = {
   Query: {
-    getUsers: async (_, __, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    getUsers: async (_, __, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       await User.find({}).exec();
@@ -39,8 +38,8 @@ const resolvers = {
         return e.message;
       }
     },
-    addArtist: async (_, args, { isAuthenticated }) => {
-      if (!isAuthenticated) {
+    addArtist: async (_, args, { auth }) => {
+      if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
