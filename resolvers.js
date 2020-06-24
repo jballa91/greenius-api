@@ -17,12 +17,14 @@ const resolvers = {
       }
       await User.find({}).exec();
     },
-    getArtist: async (_, _id) => await Artist.findOne(_id).exec(),
-    getArtists: async () => await Artist.find({}).exec(),
-    getSong: async (_, _id) => await Song.findOne(_id).exec(),
-    getSongs: async (_, __) => await Song.find({}).exec(),
-    getSongComment: async (_, _id) => await SongComment.findOne(_id).exec(),
-    getAnnotation: async (_, _id) => await Annotation.findOne(_id).exec(),
+    getArtist: async (_, { input }) => await Artist.findOne(input).exec(),
+    getArtists: async () => await Artist.find(input).exec(),
+    getSong: async (_, { input }) => await Song.findOne(input).exec(),
+    getSongs: async (_, { input }) => await Song.find(input).exec(),
+    getSongComment: async (_, { input }) =>
+      await SongComment.findOne(input).exec(),
+    getAnnotation: async (_, { input }) =>
+      await Annotation.findOne(input).exec(),
     getAnnotationComment: async (_, _id) =>
       await AnnotationComment.findOne(_id).exec(),
   },
@@ -49,12 +51,13 @@ const resolvers = {
         return e.message;
       }
     },
-    addSong: async (_, args, { auth }) => {
+    addSong: async (_, { input }, { auth }) => {
+      console.log(auth);
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
-        let response = await Song.create(args);
+        let response = await Song.create(input);
         return response;
       } catch (e) {
         return e.message;

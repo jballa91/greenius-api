@@ -2,7 +2,7 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
-    id: ID!
+    id: ID
     userName: String
     email: String
   }
@@ -23,15 +23,33 @@ const typeDefs = gql`
     artist: String
     genre: String
   }
+  input SongInput {
+    id: ID
+    name: String
+    artist: String
+    genre: String
+    lyrics: [String]
+    likes: Int
+    dislikes: Int
+  }
+  input NewSongInput {
+    id: ID
+    name: String!
+    artist: String!
+    genre: String!
+    lyrics: [String]!
+    likes: Int
+    dislikes: Int
+  }
   type SongComment {
-    id: ID!
+    id: ID
     content: String!
     likes: Int
     dislikes: Int
     songId: String!
   }
   type Annotation {
-    id: ID!
+    id: ID
     lines: [String]!
     content: String!
     likes: Int
@@ -39,7 +57,7 @@ const typeDefs = gql`
     songId: String!
   }
   type AnnotationComment {
-    id: ID!
+    id: ID
     content: String!
     likes: Int
     dislikes: Int
@@ -50,8 +68,8 @@ const typeDefs = gql`
     getUsers: [User]
     getArtist(_id: String): Artist
     getArtists: [Artist]
-    getSong(_id: String): Song
-    getSongs: [Song]
+    getSong(input: SongInput): Song
+    getSongs(input: SongInput): [Song]
     getSongComment(_id: String): SongComment
     getAnnotation(_id: String): Annotation
     getAnnotationComment(_id: String): AnnotationComment
@@ -59,7 +77,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(userName: String!, email: String!): User
     addArtist(name: String!, genre: String!): Artist
-    addSong(name: String, lyrics: String, artist: String, genre: String): Song
+    addSong(input: NewSongInput!): Song
     addSongComment(
       content: String
       likes: Int

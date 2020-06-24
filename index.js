@@ -20,10 +20,15 @@ const server = new ApolloServer({
     let user = null;
     try {
       const authHeader = req.headers.authorization || "";
+      console.log("AH", authHeader);
+      console.log("headers", req.headers);
       if (authHeader) {
         const token = authHeader.split(" ")[1];
         const payload = await isTokenValid(token);
+        console.log("payload", payload);
+
         isAuthenticated = payload && payload.decoded.sub ? true : false;
+        console.log("isAuth", isAuthenticated);
       }
     } catch (e) {
       console.error(e);
