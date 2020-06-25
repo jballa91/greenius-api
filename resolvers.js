@@ -52,7 +52,8 @@ const resolvers = {
       }
     },
     addSong: async (_, { input }, { auth }) => {
-      console.log(auth);
+      console.log("YOU DID IT");
+
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }

@@ -1,6 +1,16 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  enum Genre {
+    POP
+    HIPHOP
+    ALT
+    ROCK
+    RB
+    JAZZ
+    COUNTRY
+    NON
+  }
   type User {
     id: ID
     userName: String
@@ -21,13 +31,13 @@ const typeDefs = gql`
     annotations: [Annotation]
     comments: [SongComment]
     artist: String
-    genre: String
+    genre: Genre
   }
   input SongInput {
     id: ID
     name: String
     artist: String
-    genre: String
+    genre: Genre
     lyrics: [String]
     likes: Int
     dislikes: Int
@@ -36,7 +46,7 @@ const typeDefs = gql`
     id: ID
     name: String!
     artist: String!
-    genre: String!
+    genre: Genre!
     lyrics: [String]!
     likes: Int
     dislikes: Int
