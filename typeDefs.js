@@ -25,19 +25,21 @@ const typeDefs = gql`
   type Song {
     id: ID
     name: String
+    artist: String
+    genre: Genre
+    img: String
     lyrics: [String]
     likes: Int
     dislikes: Int
-    annotations: [Annotation]
     comments: [SongComment]
-    artist: String
-    genre: Genre
+    annotations: [Annotation]
   }
   input SongInput {
     id: ID
     name: String
     artist: String
     genre: Genre
+    img: String
     lyrics: [String]
     likes: Int
     dislikes: Int
@@ -47,6 +49,7 @@ const typeDefs = gql`
     name: String!
     artist: String!
     genre: Genre!
+    img: String!
     lyrics: [String]!
     likes: Int
     dislikes: Int
@@ -79,7 +82,8 @@ const typeDefs = gql`
     getArtist(_id: String): Artist
     getArtists: [Artist]
     getSong(input: SongInput): Song
-    getSongs(input: SongInput): [Song]
+    getSongsByDate: [Song]
+    getSongsByPop: [Song]
     getSongComment(_id: String): SongComment
     getAnnotation(_id: String): Annotation
     getAnnotationComment(_id: String): AnnotationComment
@@ -88,6 +92,7 @@ const typeDefs = gql`
     addUser(userName: String!, email: String!): User
     addArtist(name: String!, genre: String!): Artist
     addSong(input: NewSongInput!): Song
+    editSong(input: SongInput!): Song
     addSongComment(
       content: String
       likes: Int

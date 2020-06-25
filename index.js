@@ -16,8 +16,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req, ...rest }) => {
-    console.log(req);
-
     let isAuthenticated = false;
     let user = null;
     try {

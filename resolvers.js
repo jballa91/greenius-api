@@ -20,7 +20,10 @@ const resolvers = {
     getArtist: async (_, { input }) => await Artist.findOne(input).exec(),
     getArtists: async () => await Artist.find(input).exec(),
     getSong: async (_, { input }) => await Song.findOne(input).exec(),
-    getSongs: async (_, { input }) => await Song.find(input).exec(),
+    getSongsByDate: async (_, __) =>
+      await Song.find({}).sort({ _id: -1 }).exec(),
+    getSongsByPop: async (_, __) =>
+      await Song.find({}).sort({ likes: -1 }).exec(),
     getSongComment: async (_, { input }) =>
       await SongComment.findOne(input).exec(),
     getAnnotation: async (_, { input }) =>
@@ -59,6 +62,21 @@ const resolvers = {
       }
       try {
         let response = await Song.create(input);
+        return response;
+      } catch (e) {
+        return e.message;
+      }
+    },
+    editSong: async (_, { input }, { auth }) => {
+      console.log("SONG EDITED");
+
+      if (!auth.isAuthenticated) {
+        throw new AuthenticationError("Please log in");
+      }
+      try {
+        const filter = { _id: input.id };
+        const update = input;
+        let response = await Song.findByIdAndUpdate(filter, update);
         return response;
       } catch (e) {
         return e.message;

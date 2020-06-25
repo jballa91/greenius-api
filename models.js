@@ -15,12 +15,13 @@ const artistSchema = new Schema({
 const songSchema = new Schema({
   name: String,
   lyrics: [String],
+  artist: String,
+  genre: String,
+  img: String,
   likes: Number,
   dislikes: Number,
   comments: [{ type: Schema.Types.ObjectId, ref: "songComment" }],
   annotations: [{ type: Schema.Types.ObjectId, ref: "annotation" }],
-  artist: String,
-  genre: String,
 });
 
 const songCommentSchema = new Schema({
