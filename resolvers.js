@@ -35,9 +35,15 @@ const resolvers = {
   //   song: async (parent) => await Song.findById(parent.songId),
   // },
   Mutation: {
-    addUser: async (_, args) => {
+    addUser: async (_, { input }, { auth }) => {
+      console.log(input, auth);
+      // if (!auth.isAuthenticated) {
+      //   throw new AuthenticationError("Please log in");
+      // }
       try {
-        let response = await User.create(args);
+        let response = await User.create(input);
+        console.log(response);
+
         return response;
       } catch (e) {
         return e.message;
@@ -78,16 +84,21 @@ const resolvers = {
         return e.message;
       }
     },
-    addSongComment: async (_, args, { auth }) => {
+    addSongComment: async (_, { input }, { auth }) => {
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
+      console.log(input);
+
       try {
-        let response = await SongComment.create(args);
-        let response2 = await Song.findOne({ _id: args.songId }, (err, doc) => {
-          doc.comments.push(response._id);
-          doc.save();
-        });
+        let response = await SongComment.create(input);
+        let response2 = await Song.findOne(
+          { _id: input.songId },
+          (err, doc) => {
+            doc.comments.push(response._id);
+            doc.save();
+          }
+        );
         return response;
       } catch (e) {
         return e.message;

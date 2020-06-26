@@ -16,6 +16,11 @@ const typeDefs = gql`
     userName: String
     email: String
   }
+  input NewUserInput {
+    id: ID
+    userName: String!
+    email: String!
+  }
   type Artist {
     id: ID
     name: String
@@ -60,6 +65,15 @@ const typeDefs = gql`
     likes: Int
     dislikes: Int
     songId: String!
+    postedBy: String!
+  }
+  input NewSongCommentInput {
+    id: ID
+    content: String!
+    likes: Int
+    dislikes: Int
+    songId: String!
+    postedBy: String!
   }
   type Annotation {
     id: ID
@@ -79,6 +93,7 @@ const typeDefs = gql`
 
   type Query {
     getUsers: [User]
+    getUserByEmail(email: String): [User]
     getArtist(_id: String): Artist
     getArtists: [Artist]
     getSong(_id: ID!): Song
@@ -89,16 +104,11 @@ const typeDefs = gql`
     getAnnotationComment(_id: String): AnnotationComment
   }
   type Mutation {
-    addUser(userName: String!, email: String!): User
+    addUser(input: NewUserInput!): User
     addArtist(name: String!, genre: String!): Artist
     addSong(input: NewSongInput!): Song
     editSong(input: SongInput!): Song
-    addSongComment(
-      content: String
-      likes: Int
-      dislikes: Int
-      songId: String
-    ): SongComment
+    addSongComment(input: NewSongCommentInput!): SongComment
     addAnnotation(
       content: String
       likes: Int

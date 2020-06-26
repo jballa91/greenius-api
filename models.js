@@ -29,6 +29,7 @@ const songCommentSchema = new Schema({
   likes: Number,
   dislikes: Number,
   songId: String,
+  postedBy: String,
 });
 
 const annotationSchema = new Schema({
