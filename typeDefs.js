@@ -81,7 +81,7 @@ const typeDefs = gql`
     getUsers: [User]
     getArtist(_id: String): Artist
     getArtists: [Artist]
-    getSong(input: SongInput): Song
+    getSong(_id: ID!): Song
     getSongsByDate: [Song]
     getSongsByPop: [Song]
     getSongComment(_id: String): SongComment

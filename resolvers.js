@@ -19,7 +19,7 @@ const resolvers = {
     },
     getArtist: async (_, { input }) => await Artist.findOne(input).exec(),
     getArtists: async () => await Artist.find(input).exec(),
-    getSong: async (_, { input }) => await Song.findOne(input).exec(),
+    getSong: async (_, { _id }) => await Song.findOne({ _id: _id }).exec(),
     getSongsByDate: async (_, __) =>
       await Song.find({}).sort({ _id: -1 }).exec(),
     getSongsByPop: async (_, __) =>
@@ -55,8 +55,6 @@ const resolvers = {
       }
     },
     addSong: async (_, { input }, { auth }) => {
-      console.log("YOU DID IT");
-
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
@@ -68,8 +66,6 @@ const resolvers = {
       }
     },
     editSong: async (_, { input }, { auth }) => {
-      console.log("SONG EDITED");
-
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
