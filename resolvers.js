@@ -36,14 +36,11 @@ const resolvers = {
   // },
   Mutation: {
     addUser: async (_, { input }, { auth }) => {
-      console.log(input, auth);
-      // if (!auth.isAuthenticated) {
-      //   throw new AuthenticationError("Please log in");
-      // }
+      if (!auth.isAuthenticated) {
+        throw new AuthenticationError("Please log in");
+      }
       try {
         let response = await User.create(input);
-        console.log(response);
-
         return response;
       } catch (e) {
         return e.message;
@@ -88,7 +85,6 @@ const resolvers = {
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
-      console.log(input);
 
       try {
         let response = await SongComment.create(input);
