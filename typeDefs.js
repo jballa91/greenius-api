@@ -67,6 +67,14 @@ const typeDefs = gql`
     songId: String!
     postedBy: String!
   }
+  input SongCommentInput {
+    id: ID
+    content: String!
+    likes: Int
+    dislikes: Int
+    songId: String!
+    postedBy: String!
+  }
   input NewSongCommentInput {
     id: ID
     content: String!
@@ -109,6 +117,7 @@ const typeDefs = gql`
     addSong(input: NewSongInput!): Song
     editSong(input: SongInput!): Song
     addSongComment(input: NewSongCommentInput!): SongComment
+    editSongComment(input: SongCommentInput!): SongComment
     addAnnotation(
       content: String
       likes: Int

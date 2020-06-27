@@ -100,6 +100,20 @@ const resolvers = {
         return e.message;
       }
     },
+    editSongComment: async (_, { input }, { auth }) => {
+      if (!auth.isAuthenticated) {
+        throw new AuthenticationError("Please log in");
+      }
+
+      try {
+        const filter = { _id: input.id };
+        const update = input;
+        let response = await SongComment.findByIdAndUpdate(filter, update);
+        return response;
+      } catch (e) {
+        return e.message;
+      }
+    },
     addAnnotation: async (_, args, { auth }) => {
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
