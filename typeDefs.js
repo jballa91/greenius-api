@@ -110,6 +110,18 @@ const typeDefs = gql`
     likedBy: [String]!
     dislikedBy: [String]!
   }
+  input AnnotationInput {
+    id: ID
+    startIndex: Int!
+    endIndex: Int!
+    content: String!
+    likes: Int!
+    dislikes: Int!
+    songId: String!
+    postedBy: String!
+    likedBy: [String]!
+    dislikedBy: [String]!
+  }
   input NewAnnotationInput {
     id: ID
     startIndex: Int!
@@ -150,6 +162,7 @@ const typeDefs = gql`
     addSongComment(input: NewSongCommentInput!): SongComment
     editSongComment(input: SongCommentInput!): SongComment
     addAnnotation(input: NewAnnotationInput!): Annotation
+    editAnnotation(input: AnnotationInput!): Annotation
     addAnnotationComment(
       content: String
       likes: Int

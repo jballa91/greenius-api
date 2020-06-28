@@ -132,6 +132,19 @@ const resolvers = {
         return e.message;
       }
     },
+    editAnnotation: async (_, { input }, { auth }) => {
+      if (!auth.isAuthenticated) {
+        throw new AuthenticationError("Please log in");
+      }
+      try {
+        const filter = { _id: input.id };
+        const update = input;
+        let response = await Annotation.findByIdAndUpdate(filter, update);
+        return response;
+      } catch (e) {
+        return e.message;
+      }
+    },
     addAnnotationComment: async (_, args, { auth }) => {
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
