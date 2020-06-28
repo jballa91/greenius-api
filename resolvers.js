@@ -114,16 +114,19 @@ const resolvers = {
         return e.message;
       }
     },
-    addAnnotation: async (_, args, { auth }) => {
+    addAnnotation: async (_, { input }, { auth }) => {
       if (!auth.isAuthenticated) {
         throw new AuthenticationError("Please log in");
       }
       try {
-        let response = await Annotation.create(args);
-        let response2 = await Song.findOne({ _id: args.songId }, (err, doc) => {
-          doc.annotations.push(response._id);
-          doc.save();
-        });
+        let response = await Annotation.create(input);
+        let response2 = await Song.findOne(
+          { _id: input.songId },
+          (err, doc) => {
+            doc.annotations.push(response._id);
+            doc.save();
+          }
+        );
         return response;
       } catch (e) {
         return e.message;

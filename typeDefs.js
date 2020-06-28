@@ -38,6 +38,9 @@ const typeDefs = gql`
     dislikes: Int
     comments: [SongComment]
     annotations: [Annotation]
+    postedBy: String
+    likedBy: [String]
+    dislikedBy: [String]
   }
   input SongInput {
     id: ID
@@ -48,6 +51,9 @@ const typeDefs = gql`
     lyrics: [String]
     likes: Int
     dislikes: Int
+    postedBy: String
+    likedBy: [String]
+    dislikedBy: [String]
   }
   input NewSongInput {
     id: ID
@@ -58,6 +64,9 @@ const typeDefs = gql`
     lyrics: [String]!
     likes: Int
     dislikes: Int
+    postedBy: String
+    likedBy: [String]
+    dislikedBy: [String]
   }
   type SongComment {
     id: ID
@@ -66,6 +75,8 @@ const typeDefs = gql`
     dislikes: Int
     songId: String!
     postedBy: String!
+    likedBy: [String]
+    dislikedBy: [String]
   }
   input SongCommentInput {
     id: ID
@@ -74,6 +85,8 @@ const typeDefs = gql`
     dislikes: Int
     songId: String!
     postedBy: String!
+    likedBy: [String]
+    dislikedBy: [String]
   }
   input NewSongCommentInput {
     id: ID
@@ -82,14 +95,32 @@ const typeDefs = gql`
     dislikes: Int
     songId: String!
     postedBy: String!
+    likedBy: [String]
+    dislikedBy: [String]
   }
   type Annotation {
     id: ID
-    lines: [String]!
+    startIndex: Int!
+    endIndex: Int!
     content: String!
-    likes: Int
-    dislikes: Int
+    likes: Int!
+    dislikes: Int!
     songId: String!
+    postedBy: String!
+    likedBy: [String]!
+    dislikedBy: [String]!
+  }
+  input NewAnnotationInput {
+    id: ID
+    startIndex: Int!
+    endIndex: Int!
+    content: String!
+    likes: Int!
+    dislikes: Int!
+    songId: String!
+    postedBy: String!
+    likedBy: [String]!
+    dislikedBy: [String]!
   }
   type AnnotationComment {
     id: ID
@@ -118,12 +149,7 @@ const typeDefs = gql`
     editSong(input: SongInput!): Song
     addSongComment(input: NewSongCommentInput!): SongComment
     editSongComment(input: SongCommentInput!): SongComment
-    addAnnotation(
-      content: String
-      likes: Int
-      dislikes: Int
-      songId: String
-    ): Annotation
+    addAnnotation(input: NewAnnotationInput!): Annotation
     addAnnotationComment(
       content: String
       likes: Int

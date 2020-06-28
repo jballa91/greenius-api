@@ -22,6 +22,9 @@ const songSchema = new Schema({
   dislikes: Number,
   comments: [{ type: Schema.Types.ObjectId, ref: "songComment" }],
   annotations: [{ type: Schema.Types.ObjectId, ref: "annotation" }],
+  postedBy: String,
+  likedBy: [String],
+  dislikedBy: [String],
 });
 
 const songCommentSchema = new Schema({
@@ -30,15 +33,20 @@ const songCommentSchema = new Schema({
   dislikes: Number,
   songId: String,
   postedBy: String,
+  likedBy: [String],
+  dislikedBy: [String],
 });
 
 const annotationSchema = new Schema({
-  lines: String,
-  index: Number,
+  startIndex: Number,
+  endIndex: Number,
   content: String,
   likes: Number,
   dislikes: Number,
   songId: String,
+  postedBy: String,
+  likedBy: [String],
+  dislikedBy: [String],
 });
 
 const annotationCommentSchema = new Schema({
