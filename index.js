@@ -2,13 +2,15 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const { isTokenValid } = require("./validate");
 
+const { frontend } = require("./config_cors");
+
 const { typeDefs } = require("./typeDefs");
 const { resolvers } = require("./resolvers");
 
 require("./config");
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: `${frontend}`,
   credentials: true,
 };
 
@@ -37,5 +39,5 @@ const app = express();
 server.applyMiddleware({ app });
 
 app.listen({ port: 8080 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`)
 );
